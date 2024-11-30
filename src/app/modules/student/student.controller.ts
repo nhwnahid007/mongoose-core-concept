@@ -13,6 +13,7 @@ const createStudent = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.log(error);
   }
   //send response
@@ -28,6 +29,7 @@ const getAllStudents = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.log(error);
   }
 };
@@ -42,6 +44,7 @@ const getSingleStudent = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.log(error);
   }
 };
