@@ -8,7 +8,23 @@ import {
 
 // Schema for user's name
 const userNameSchema = new Schema<UserName>({
-  firstName: { type: String, required: [true, 'First name is required'] }, // First name is required
+  firstName: {
+    type: String, // Specifies that the firstName field should be of type String
+    required: [true, 'First name is required'], // Makes the firstName field mandatory; if not provided, the error message 'First name is required' will be shown
+    trim: true, // Removes any leading or trailing whitespace from the firstName
+    maxlength: [20, 'Name can not be more than 20'], // Limits the length of the firstName to a maximum of 20 characters; if exceeded, the error message 'Name can not be more than 20' will be shown
+    validate: {
+      validator: function (value: string) {
+        // Convert the first letter to uppercase if it's not
+        if (value.charAt(0) !== value.charAt(0).toUpperCase()) {
+          this.firstName = value.charAt(0).toUpperCase() + value.slice(1);
+        }
+        // eslint-disable-next-line no-console
+        console.log(this.firstName);
+        return true;
+      },
+    },
+  }, // First name is required
   middleName: { type: String }, // Middle name is optional
   lastName: { type: String, required: [true, 'Last name is required'] }, // Last name is required
 });

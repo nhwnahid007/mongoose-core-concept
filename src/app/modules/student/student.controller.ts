@@ -13,8 +13,11 @@ const createStudent = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to create student',
+      error: error,
+    });
   }
   //send response
 };
