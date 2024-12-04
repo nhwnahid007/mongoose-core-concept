@@ -6,6 +6,8 @@ import {
   UserName,
 } from './student.interface'; // Importing interfaces for type-checking
 
+import validator from 'validator';
+
 // Schema for user's name
 const userNameSchema = new Schema<UserName>({
   firstName: {
@@ -26,7 +28,16 @@ const userNameSchema = new Schema<UserName>({
     },
   }, // First name is required
   middleName: { type: String }, // Middle name is optional
-  lastName: { type: String, required: [true, 'Last name is required'] }, // Last name is required
+  lastName: {
+    type: String,
+    required: [true, 'Last name is required'],
+    validate: {
+      validator: (value: string) => {
+        return validator.isAlpha(value); // Return the result of the validation
+      },
+      message: '{VALUE} is not valid',
+    },
+  }, // Last name is required
 });
 
 // Schema for guardian details
@@ -84,7 +95,14 @@ const studentSchema = new Schema<Student>({
     required: [true, 'Gender is required'],
   }, // Gender can be either male or female
   dateOfBirth: { type: String }, // Date of birth, optional
-  email: { type: String, required: [true, 'Email is required'], unique: true }, // Email is required
+  email: { type: String, required: [true, 'Email is required'], unique: true,
+    validate: {
+      validator: (value:string) => {
+        return validator.isEmail(value);
+      },
+      message: '{VALUE} is not valid email'
+    }
+   }, // Email is required
   ContactNO: { type: String, required: [true, 'Contact number is required'] }, // Contact number is required
   emergencyContactNo: {
     type: String,
